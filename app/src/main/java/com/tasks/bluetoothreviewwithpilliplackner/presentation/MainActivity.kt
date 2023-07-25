@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,11 +25,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.tasks.bluetoothreviewwithpilliplackner.presentation.components.ChatScreen
 import com.tasks.bluetoothreviewwithpilliplackner.ui.theme.BluetoothReviewWithPillipLacknerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     private val bluetoothManager by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             applicationContext.getSystemService(BluetoothManager::class.java)
@@ -96,6 +99,14 @@ class MainActivity : ComponentActivity() {
                                 Text(text = "Connecting...")
                             }
                         }
+
+                        state.isConnected -> {
+                            ChatScreen(
+                                state = state,
+                                onDisconnect = viewModel::disConnectFromDevice,
+                                onSendMessage = viewModel::sendMessage
+                            )
+                        }
                         else -> {
                             DeviceScreen(
                                 state = state,
@@ -110,6 +121,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 
 }
 

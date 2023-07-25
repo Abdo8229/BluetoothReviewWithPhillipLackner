@@ -11,7 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,7 +36,8 @@ fun ChatScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Messages", modifier = Modifier.weight(1f)
@@ -48,7 +49,9 @@ fun ChatScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(state.messages) { message ->
                 Column(
@@ -76,9 +79,10 @@ fun ChatScreen(
             )
             IconButton(onClick = {
                 onSendMessage(message.value)
+                message.value = ""
                 keyBoardcontrole?.hide()
             }) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Send message")
+                Icon(imageVector = Icons.Default.Send, contentDescription = "Send message")
             }
         }
     }
