@@ -1,6 +1,7 @@
 package com.tasks.bluetoothreviewwithpilliplackner.data
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,12 +14,12 @@ class BluetoothStateReceiver(
     @SuppressLint("MissingPermission")
     override fun onReceive(context: Context?, intent: Intent?) {
         val device =
+            //val a = BluetoothClass.Service.AUDIO
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
                 intent?.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             } else {
                 intent?.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
             }
-
         when (intent?.action) {
             BluetoothDevice.ACTION_ACL_CONNECTED -> {
                 onStateChanged(true, device ?: return)
